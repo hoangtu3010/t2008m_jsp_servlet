@@ -60,6 +60,14 @@
         <url-pattern>/products/edit</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <servlet-class>com.example.hellot2008m.controller.products.DeleteProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProductServlet</servlet-name>
+        <url-pattern>/products/delete</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>ShowShoppingCart</servlet-name>
         <servlet-class>com.example.hellot2008m.controller.shoppingcart.ShowShoppingCart</servlet-class>
     </servlet>
@@ -74,5 +82,13 @@
     <servlet-mapping>
         <servlet-name>AddProductToCart</servlet-name>
         <url-pattern>/carts/add</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteProductFormCart</servlet-name>
+        <servlet-class>com.example.hellot2008m.controller.shoppingcart.DeleteProductFormCart</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteProductFormCart</servlet-name>
+        <url-pattern>/carts/delete</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -4,6 +4,7 @@ import com.example.hellot2008m.annotation.Column;
 import com.example.hellot2008m.annotation.Id;
 import com.example.hellot2008m.annotation.Table;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 @Table(name = "products")
@@ -64,6 +65,34 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    private HashMap<String, String> errors;
+
+    private void checkValid(){
+        this.errors = new HashMap<>();
+
+        if(this.name == null || this.name.length() == 0){
+            this.errors.put("name", "Name is required");
+        }
+
+        if(this.thumbnail == null || this.thumbnail.length() == 0){
+            this.errors.put("thumbnail", "Thumbnail is required");
+        }
+
+        if(this.price <= 0){
+            this.errors.put("price", "Price is required");
+        }
+    }
+
+    public HashMap<String, String> getErrors() {
+        checkValid();
+        return errors;
+    }
+
+    public boolean isValid(){
+        checkValid();
+        return errors == null || errors.size() == 0;
     }
 
     public int getId() {

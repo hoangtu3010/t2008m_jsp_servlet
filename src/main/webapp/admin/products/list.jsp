@@ -19,12 +19,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
             crossorigin="anonymous"></script>
-    <title>List Students</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <title>List Products</title>
 </head>
 <body>
 <div class="container">
     <h1 class="text-center">List Product</h1>
-    <a class="btn btn-primary mb-5" href="/products/create">New Product</a>
+    <div class="d-flex justify-content-end mb-5">
+        <a class="btn btn-success" href="/products/create"><i class="bi bi-plus-circle"></i> Create</a>
+        <a class="btn btn-primary ms-3" href="/carts/list"><i class="bi bi-cart2"></i> Cart</a>
+    </div>
     <table class="table table-striped">
         <thead>
         <tr>
@@ -32,7 +36,7 @@
             <th scope="col">Name</th>
             <th scope="col">Thumbnail</th>
             <th scope="col">Price</th>
-            <th>Action</th>
+            <th class="text-center" scope="col">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -49,8 +53,13 @@
             </td>
             <td><%= p.getPrice() %>
             </td>
-            <td><a href="/carts/add?productId=<%= p.getId()%>&quantity=1" class="btn btn-danger">Add to cart</a>
-                <a href="/products/edit?id=<%= p.getId() %>" type="button" class="btn btn-info">Edit</a></td>
+            <td class="text-center"><a href="/carts/add?productId=<%= p.getId()%>&quantity=1" class="btn btn-info"><i
+                    class="bi bi-cart-plus"></i></a>
+                <a href="/products/edit?id=<%= p.getId() %>" type="button" class="btn btn-secondary"><i
+                        class="bi bi-pencil-square"></i></a> <a
+                        href="/products/delete?id=<%= p.getId() %>" type="button" class="btn btn-danger btn-delete"><i
+                        class="bi bi-trash3"></i></a>
+            </td>
         </tr>
         <%
             }
@@ -77,3 +86,25 @@
 </div>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let listDeleteButton = document.querySelectorAll('.btn-delete');
+        for (let i = 0; i < listDeleteButton.length; i++){
+            listDeleteButton[i].addEventListener("click", function (event){
+                event.preventDefault();
+                if (confirm("Are you sure?")){
+                    let xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function (){
+                        if (xhr.readyState === 4 && xhr.status === 200){
+                            alert('Delete Success!');
+                            window.location.reload();
+                        }
+                    }
+                    xhr.open('GET', this.href, false);
+                    xhr.send();
+                }
+            })
+        }
+    })
+</script>

@@ -34,18 +34,19 @@ public class CreateProductServlet extends HttpServlet {
         int status = 1;
         Product product = new Product(0, name, thumbnail, price, status);
 
-//        if (!product.isValid()){
-//            Student obj = new Student();
-//            obj.setId(0);
-//            obj.setRollName("");
-//            obj.setName("");
-//            obj.setEmail("");
-//
-//            req.setAttribute("obj", obj);
-//            req.setAttribute("errors", student.getErrors());
-//            req.getRequestDispatcher("/admin/students/form.jsp").forward(req, resp);
-//            return;
-//        }
+        if (!product.isValid()){
+            Product obj = new Product();
+            obj.setId(0);
+            obj.setName("");
+            obj.setThumbnail("");
+            obj.setPrice(0);
+            obj.setStatus(0);
+
+            req.setAttribute("obj", obj);
+            req.setAttribute("errors", product.getErrors());
+            req.getRequestDispatcher("/admin/products/form.jsp").forward(req, resp);
+            return;
+        }
 
         GenericModel<Product> productModel = new GenericModel<>(Product.class);
         productModel.save(product);

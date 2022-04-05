@@ -3,14 +3,14 @@
     Product obj = (Product) request.getAttribute("obj");
 %>
 
-<%--<%@ page import="java.util.HashMap" %>--%>
-<%--<%--%>
-<%--    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");--%>
+<%@ page import="java.util.HashMap" %>
+<%
+    HashMap<String, String> errors = (HashMap<String, String>) request.getAttribute("errors");
 
-<%--    if (errors == null) {--%>
-<%--        errors = new HashMap<>();--%>
-<%--    }--%>
-<%--%>--%>
+    if (errors == null) {
+        errors = new HashMap<>();
+    }
+%>
 
 <!doctype html>
 <html lang="en">
@@ -32,23 +32,42 @@
         </p>
         </h1>
         <a href="/products/list" class="btn btn-secondary mb-5">Back to list</a>
-
+        <% if (errors.size() > 0) { %>
+        <div class="alert alert-danger" role="alert">
+            Please enter information below.
+        </div>
+        <% } %>
         <form action="<%= obj.getId() == 0 ? "/products/create" : "/products/edit" %>" method="post">
             <div class="mb-3">
                 <label class="form-label">Name</label>
                 <input type="hidden" name="id" value="<%= obj.getId() %>">
                 <input type="text" name="name" class="form-control"
                        value="<%= obj.getName() != null ? obj.getName() : "" %>">
+                <% if (errors.containsKey("name")) { %>
+                <p class="text-danger mt-2"><%=errors.get("name")%></p>
+                <%
+                    }
+                %>
             </div>
             <div class="mb-3">
                 <label class="form-label">Thumbnail</label>
                 <input type="text" name="thumbnail" class="form-control"
                        value="<%= obj.getThumbnail() != null ? obj.getThumbnail() : "" %>">
+                <% if (errors.containsKey("thumbnail")) { %>
+                <p class="text-danger mt-2"><%=errors.get("thumbnail")%></p>
+                <%
+                    }
+                %>
             </div>
             <div class="mb-3">
                 <label class="form-label">Price</label>
                 <input type="number" name="price" class="form-control" aria-describedby="emailHelp"
                        value="<%= obj.getPrice() != 0 ? obj.getPrice() : 0 %>">
+                <% if (errors.containsKey("price")) { %>
+                <p class="text-danger mt-2"><%=errors.get("price")%></p>
+                <%
+                    }
+                %>
             </div>
             <button type="submit" class="btn btn-primary"><%= obj.getId() == 0 ? "Submit" : "Save" %>
             </button>
